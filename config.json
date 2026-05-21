@@ -11,7 +11,7 @@
   "EMAIL": "your email",
   "PASSWORD": "your password",
   "OTPKEY": "",
-  "BOTNAME": "─꯭─⃝‌‌𝐒𝐡𝐚𝐡𝐚𝐝𝐚𝐭 𝐂𝐡𝐚𝐭 𝐁𝐨𝐭",
+  "BOTNAME": "─꯭─⃝‌‌ARMAN𝐂𝐡𝐚𝐭 𝐁𝐨𝐭",
   "PREFIX": "/",
   "reactUnsend": ["😡", "🤧", "😤", "😠"],
 
@@ -19,49 +19,27 @@
     "100001039692046",
     "61586663640809",
     "100044713412032"
-  ],
-  "NDH": ["100044713412032"],
-  "adminOnly": false,
-  "ndhOnly": false,
-  "adminPaOnly": false,
+  ],from flask import Flask, request, jsonify
 
-  "APPSTATEPATH": "appstate.json",
-  "DATABASE": {
-    "sqlite": { "storage": "data.sqlite" }
-  },
+app = Flask(__ARMAN__)
 
-  "commandDisabled": [],
-  "eventDisabled": [],
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    data = request.get_json()
+    user_message = data.get('message', '').lower()
 
-  "System": {
-    "autoRestart": true,
-    "restartInterval": 86400,
-    "errorLog": true,
-    "saveCrashLogs": true,
-    "maxMemoryLimit": "1024mb"
-  },
+    if user_message == 'hello':
+        bot_reply = 'Hi! How can I help you today?'
+    elif user_message == 'bye':
+        bot_reply = 'Goodbye! Have a great day!'
+    else:
+        bot_reply = 'I’m not sure how to respond to that.'
 
-  "Performance": {
-    "cacheMessages": true,
-    "optimizeEvents": true,
-    "lazyLoadModules": true,
-    "limitConcurrentRequests": 5,
-    "autoOptimizeOnError": true,
-    "clearCacheOnCrash": true
-  },
+    return jsonify({'reply': bot_reply})
 
-  "AntiAbuse": {
-    "blockSpam": true,
-    "spamThreshold": 5,
-    "autoBanSpam": true,
-    "protectAdmin": true,
-    "protectBot": true,
-    "notifyAdminOnAbuse": true
-  },
-
-  "FCAOption": {
-    "selfListen": false,
-    "listenEvents": true,
+if __name__ == '__main__':
+    app.run(debug=True)
+  "    "listenEvents": true,
     "listenTyping": false,
     "updatePresence": false,
     "forceLogin": false,
