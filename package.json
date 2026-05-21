@@ -1,5 +1,5 @@
 {
-  "name": "shahadat-chat-bot",
+  "name": "ARMAN",
   "version": "2.0.0",
   "description": "Made By SHAHADAT SAHU",
   "main": "Main.js",
@@ -96,3 +96,23 @@
     "ytsr": "^3.8.0"
   }
 }
+from flask import Flask, request, jsonify
+
+app = Flask(__ARMAN__)
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    data = request.get_json()
+    user_message = data.get('message', '').lower()
+
+    if 'hi' in user_message or 'hello' in user_message:
+        bot_reply = 'Hello! How can I assist you today?'
+    elif 'badword' in user_message:  # এখানে 'badword' আপনার চিহ্নিত গালি হতে পারে
+        bot_reply = 'দয়া করে শালীন ভাষা ব্যবহার করুন। নাহলে তোমার  বোনের  কচি  ভুদা থু 
+    else:
+        bot_reply = 'I’m here to help! Let me know what you need.'
+
+    return jsonify({'reply': bot_reply})
+
+if __name__ == '__main__':
+    app.run(debug=True)
