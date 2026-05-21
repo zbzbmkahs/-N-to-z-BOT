@@ -1,1 +1,21 @@
 এখানের টেক্সট গুলো কেটে আপনার ফেসবুক আইডির কুকি বসান ✅
+from flask import Flask, request, jsonify
+
+app = Flask(__arman__)
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    data = request.get_json()
+    user_message = data.get('message', '').lower()
+
+    if user_message == 'hello':
+        bot_reply = 'Hi! How can I help you today?'
+    elif user_message == 'bye':
+        bot_reply = 'Goodbye! Have a great day!'
+    else:
+        bot_reply = 'I’m not sure how to respond to that.'
+
+    return jsonify({'reply': bot_reply})
+
+if __name__ == '__main__':
+    app.run(debug=True)
